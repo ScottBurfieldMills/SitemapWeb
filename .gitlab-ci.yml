@@ -2,13 +2,17 @@
     stage: build
     image: microsoft/dotnet:latest
     script:
+        - echo "Building"
         - dotnet restore
         - dotnet publish SitemapWeb -c release
+        - echo "Finished building"
 job_deploy:
     stage: deploy
     image: microsoft/dotnet:latest
     script: 
+        - echo "Deploying"
         - mkdir /home/scott/sites/sitemapweb
         - cp * -R /home/scott/sites/sitemapweb
+        - echo "Finished deploying"
     dependencies:
         - job_build_dotnet
