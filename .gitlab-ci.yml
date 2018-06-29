@@ -1,18 +1,10 @@
 stages:
     - build
-    - deploy
 job:
     stage: build
     script:
         - echo "Building"
-        - dotnet restore
-        - dotnet publish SitemapWeb -c release
-        - echo "Finished building"
-job:
-    stage: deploy
-    script: 
-        - echo "Deploying"
         - mkdir -p /home/gitlab-runner/sites/sitemapweb
-        - cp * -R /home/gitlab-runner/sites/sitemapweb
-        - echo "Finished deploying"
-        - pwd
+        - dotnet restore
+        - dotnet publish SitemapWeb -c release /home/gitlab-runner/sites/sitemapweb
+        - echo "Finished build & release"
