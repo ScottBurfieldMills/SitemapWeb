@@ -1,11 +1,6 @@
-﻿stages:
-    - build
-build:
+﻿job_build_dotnet:
     stage: build
+    image: microsoft/dotnet:latest
     script:
-        - echo "Building the app"
-        "dotnet publish -c SitemapWeb.sln release"
-    artifacts:
-        untracked: true
-    only:
-        - dev
+        - dotnet restore
+        - dotnet publish SitemapWeb -c release
