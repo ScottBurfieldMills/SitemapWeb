@@ -16,5 +16,3 @@ job:
         - cp * -R /home/scott/sites/sitemapweb
         - echo "Finished deploying"
         - pwd
-    dependencies:
-        - job_build_dotnet
