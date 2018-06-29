@@ -1,0 +1,11 @@
+﻿stages:
+    - build
+build:
+    stage: build
+    script:
+        - echo "Building the app"
+        "dotnet publish -c SitemapWeb.sln release"
+    artifacts:
+        untracked: true
+    only:
+        - dev
