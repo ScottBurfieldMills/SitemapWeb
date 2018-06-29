@@ -1,6 +1,12 @@
 ﻿job_build_dotnet:
     stage: build
-    image: microsoft/dotnet:latest
     script:
         - dotnet restore
         - dotnet publish SitemapWeb -c release
+job_deploy:
+    stage: deploy
+    script: 
+        - mkdir /home/scott/sites/sitemapweb
+        - cp * -R /home/scott/sites/sitemapweb
+    dependencies:
+        - job_build_dotnet
