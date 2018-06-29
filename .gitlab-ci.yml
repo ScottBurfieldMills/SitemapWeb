@@ -1,14 +1,14 @@
 ﻿stages:
     - build
     - deploy
-job_build_dotnet:
+job:
     stage: build
     script:
         - echo "Building"
         - dotnet restore
         - dotnet publish SitemapWeb -c release
         - echo "Finished building"
-job_deploy_site:
+job:
     stage: deploy
     script: 
         - echo "Deploying"
