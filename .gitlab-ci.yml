@@ -5,7 +5,7 @@
         - dotnet restore
         - dotnet publish SitemapWeb -c release
         - echo "Finished building"
-job_deploy:
+job_deploy_site:
     stage: deploy
     script: 
         - echo "Deploying"
