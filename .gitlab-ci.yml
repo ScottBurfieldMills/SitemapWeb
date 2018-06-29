@@ -7,5 +7,5 @@ job:
         - mkdir -p /home/gitlab-runner/sites/sitemapweb
         - dotnet restore
         - dotnet publish SitemapWeb -c release -o /home/gitlab-runner/sites/sitemapweb
-        - sudo /bin/systemctl restart kestrel-sitemapweb.service
+        - /bin/systemctl restart kestrel-sitemapweb.service
         - echo "Finished build & release"
