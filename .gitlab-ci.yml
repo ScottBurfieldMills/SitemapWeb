@@ -13,6 +13,6 @@ job:
     script: 
         - echo "Deploying"
         - mkdir -p /home/gitlab-runner/sites/sitemapweb
-        - cp * -R /home/scott/sites/sitemapweb
+        - cp * -R /home/gitlab-runner/sites/sitemapweb
         - echo "Finished deploying"
         - pwd
