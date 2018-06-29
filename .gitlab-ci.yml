@@ -6,5 +6,5 @@ job:
         - echo "Building"
         - mkdir -p /home/gitlab-runner/sites/sitemapweb
         - dotnet restore
-        - dotnet publish SitemapWeb -c release /home/gitlab-runner/sites/sitemapweb
+        - dotnet publish SitemapWeb -c release -o /home/gitlab-runner/sites/sitemapweb
         - echo "Finished build & release"
