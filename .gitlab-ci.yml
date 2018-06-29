@@ -1,6 +1,5 @@
 ﻿job_build_dotnet:
     stage: build
-    image: microsoft/dotnet:latest
     script:
         - echo "Building"
         - dotnet restore
@@ -8,10 +7,9 @@
         - echo "Finished building"
 job_deploy:
     stage: deploy
-    image: microsoft/dotnet:latest
     script: 
         - echo "Deploying"
-        - mkdir /home/scott/sites/sitemapweb
+        - mkdir -p /home/gitlab-runner/sites/sitemapweb
         - cp * -R /home/scott/sites/sitemapweb
         - echo "Finished deploying"
         - pwd
