@@ -1,7 +1,6 @@
 ﻿stages:
     - build
     - deploy
-
 job_build_dotnet:
     stage: build
     script:
