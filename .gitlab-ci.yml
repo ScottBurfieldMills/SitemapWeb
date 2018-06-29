@@ -14,5 +14,6 @@ job_deploy:
         - mkdir /home/scott/sites/sitemapweb
         - cp * -R /home/scott/sites/sitemapweb
         - echo "Finished deploying"
+        - pwd
     dependencies:
         - job_build_dotnet
