@@ -2,8 +2,40 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div>
-    <h1>Validate a sitemap</h1>
-
-    <input type="text" maxlength="300" name="sitemap" placeholder="https://sitemap.scottbm.me/sitemap.xml" />
+<div class="container" id="sitemap-checker">
+    <sitemap-submit v-if="step === 'submit'" @@submitted="submitted($event)"></sitemap-submit>
+    <transition name="fade">
+        <sitemap-inprogress v-if="step === 'inprogress'" :url="submission.url"></sitemap-inprogress>
+    </transition>
 </div>
+
+@Html.Partial("../Steps/Submission")
+@Html.Partial("../Steps/InProgress")
+
+@*<hr />
+    <div class="container">
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-6">&nbsp;</div>
+            <div class="col-6">
+                User..........<input type="text" id="userInput" />
+                <br />
+                Message...<input type="text" id="messageInput" />
+                <input type="button" id="sendButton" value="Send Message" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">&nbsp;</div>
+            <div class="col-6">
+                <ul id="messagesList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/signalr/signalr.js"></script>
+    <script src="~/js/chat.js"></script>*@

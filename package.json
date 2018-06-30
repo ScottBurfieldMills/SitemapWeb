@@ -1,0 +1,24 @@
+{
+  "name": "SitemapWeb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/scottburfieldmills/SitemapWeb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/scottburfieldmills/SitemapWeb/issues"
+  },
+  "homepage": "https://gitlab.com/scottburfieldmills/SitemapWeb#README",
+  "dependencies": {
+    "@aspnet/signalr": "^1.0.0",
+    "vue": "^2.5.16"
+  }
+}

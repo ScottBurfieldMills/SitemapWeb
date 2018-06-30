@@ -4,15 +4,30 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using SitemapWeb.Models;
 
 namespace SitemapWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IHubContext<ChatHub> _hubContext;
+
+        public HomeController(IHubContext<ChatHub> hub)
+        {
+            _hubContext = hub;
+        }
+
         public IActionResult Index()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Test()
+        {
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", "test", "woo");
+
+            return Json("");
         }
 
         public IActionResult About()

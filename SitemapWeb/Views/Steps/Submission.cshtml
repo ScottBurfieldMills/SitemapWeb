@@ -1,0 +1,18 @@
+﻿<script type="text/x-template" id="sitemap-submit">
+    <form v-on:submit.prevent="submit" class="form-horizontal" style="margin-top: 25px;" action="@Url.Action("create", "sitemap")" method="post">
+        <h1>Validate a sitemap</h1>
+
+        <div class="form-group">
+            <div class="col-md-6">
+                <input v-model="url" class="form-control" type="text" maxlength="300" placeholder="https://sitemap.scottbm.me/sitemap.xml" />
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary">
+                    <i v-bind:class="{ 'fa fa-spinner fa-spin': submitting }"></i>
+
+                    Validate
+                </button>
+            </div>
+        </div>
+    </form>
+</script>
