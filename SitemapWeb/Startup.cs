@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Hangfire;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +36,11 @@ namespace SitemapWeb
                 options.Filters.Add(new ValidateModelStateFilterAttribute());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSignalR();
+            var connection = @"Server=192.168.0.50\sqlexpress;Database=Sitemap;ConnectRetryCount=0;user=pagespeed;password=asd123";
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=mssqllocaldb;Trusted_Connection=True;ConnectRetryCount=0";
+            services.AddSignalR();
+            services.AddHangfire(x => x.UseSqlServerStorage(connection));
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
         }
 
@@ -68,7 +71,11 @@ namespace SitemapWeb
             app.UseSignalR(routes =>
             {
                 routes.MapHub<ChatHub>("/chathub");
+                routes.MapHub<SitemapHub>("/sitemaphub");
             });
+
+            app.UseHangfireServer();
+            app.UseHangfireDashboard();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SitemapWeb.Entities
 {
@@ -6,7 +8,15 @@ namespace SitemapWeb.Entities
     {
         public int Id { get; set; }
 
-        [MaxLength(512)]
+        [MaxLength(512), Required]
         public string Url { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        [Required]
+        [ForeignKey("SitemapSubmissionStatusId")]
+        public SitemapSubmissionStatus SitemapSubmissionStatus { get; set; }
+
+        public int SitemapSubmissionStatusId { get; set; }
     }
 }

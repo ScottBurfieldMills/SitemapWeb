@@ -7,6 +7,8 @@ namespace SitemapWeb.Data
     {
         public DbSet<SitemapSubmission> SitemapSubmissions { get; set; }
 
+        public DbSet<SitemapSubmissionStatus> SitemapSubmissionStatuses { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -15,7 +17,9 @@ namespace SitemapWeb.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Sitemaps;Trusted_Connection=True;");
+            var connection = @"Server=192.168.0.50\sqlexpress;Database=Sitemap;ConnectRetryCount=0;user=pagespeed;password=asd123";
+
+            optionsBuilder.UseSqlServer(connection);
         }
     }
 }

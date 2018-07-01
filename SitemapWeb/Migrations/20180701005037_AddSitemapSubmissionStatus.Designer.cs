@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SitemapWeb.Data;
 
 namespace SitemapWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180701005037_AddSitemapSubmissionStatus")]
+    partial class AddSitemapSubmissionStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,7 +29,7 @@ namespace SitemapWeb.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<int>("SitemapSubmissionStatusId");
+                    b.Property<int?>("SitemapSubmissionStatusId");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -57,8 +59,7 @@ namespace SitemapWeb.Migrations
                 {
                     b.HasOne("SitemapWeb.Entities.SitemapSubmissionStatus", "SitemapSubmissionStatus")
                         .WithMany()
-                        .HasForeignKey("SitemapSubmissionStatusId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SitemapSubmissionStatusId");
                 });
 #pragma warning restore 612, 618
         }

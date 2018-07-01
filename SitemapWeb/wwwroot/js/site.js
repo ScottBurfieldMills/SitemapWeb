@@ -20,13 +20,10 @@ if (document.getElementById('sitemap-checker') !== undefined) {
 
                 axios.post(self.$el.action, {
                     sitemapUrl: self.url
-                }).then(() => {
+                }).then((response) => {
                     self.submitting = false;
 
-                    self.$emit('submitted', {
-                        id: '12345',
-                        url: self.url
-                    });
+                    self.$emit('submitted', response.data);
                 }).catch(() => {
                     self.submitting = false;
                 });
@@ -62,6 +59,21 @@ if (document.getElementById('sitemap-checker') !== undefined) {
                 this.submission = submission;
 
                 this.step = 'inprogress';
+
+                const connection = new signalR.HubConnectionBuilder()
+                    .withUrl("/sitemaphub")
+                    .build();
+
+                connection.on("SubmissionUpdate", (arg) => {
+                    console.log(arg);
+                    console.log('Submission Update triggerd');
+                });
+
+                connection.start().then(() => {
+                    connection.invoke("WatchSubmission", submission.id);
+
+                    console.log("Invoking watch for submission " + submission.id);
+                });
             }
         }
     });
