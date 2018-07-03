@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Reference Include="SitemapValidator.Core">
-      <HintPath>..\..\SitemapValidator\SitemapValidator.Core\bin\Debug\netcoreapp2.0\SitemapValidator.Core.dll</HintPath>
+      <HintPath>lib\SitemapValidator.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
 
