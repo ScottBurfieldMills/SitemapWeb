@@ -4,7 +4,7 @@ namespace SitemapWeb.Models
 {
     public class SubmitSitemapViewModel
     {
-        //[Required]
+        [Required]
         public string SitemapUrl { get; set; }
     }
 }

@@ -24,7 +24,7 @@ if (document.getElementById('sitemap-checker') !== undefined) {
                     self.submitting = false;
 
                     self.$emit('submitted', response.data);
-                }).catch(() => {
+                }).catch((response) => {
                     self.submitting = false;
                 });
             }
@@ -37,11 +37,15 @@ if (document.getElementById('sitemap-checker') !== undefined) {
             url: {
                 type: String,
                 required: true
+            },
+            results: {
+                type: Array,
+                required: true
             }
         },
         data: function () {
             return {
-
+                
             };
         }
     });
@@ -52,7 +56,8 @@ if (document.getElementById('sitemap-checker') !== undefined) {
             step: 'submit',
             submission: {
                 url: ''
-            }
+            },
+            results: []
         },
         methods: {
             submitted: function (submission) {
@@ -61,18 +66,20 @@ if (document.getElementById('sitemap-checker') !== undefined) {
                 this.step = 'inprogress';
 
                 const connection = new signalR.HubConnectionBuilder()
-                    .withUrl("/sitemaphub")
+                    .withUrl('/sitemaphub')
                     .build();
 
-                connection.on("SubmissionUpdate", (arg) => {
-                    console.log(arg);
-                    console.log('Submission Update triggerd');
+                connection.on('SubmissionUpdate', (url, statusCode) => {
+                    this.results.unshift({
+                        url: url,
+                        statusCode: statusCode
+                    });
                 });
 
                 connection.start().then(() => {
-                    connection.invoke("WatchSubmission", submission.id);
+                    connection.invoke('WatchSubmission', submission.id);
 
-                    console.log("Invoking watch for submission " + submission.id);
+                    console.log('Invoking watch for submission ' + submission.id);
                 });
             }
         }
