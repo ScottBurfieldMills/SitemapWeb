@@ -23,27 +23,6 @@ namespace SitemapWeb.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Test()
-        {
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", "test", "woo");
-
-            return Json("");
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
         public IActionResult Privacy()
         {
             return View();
