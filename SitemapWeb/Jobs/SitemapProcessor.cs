@@ -25,7 +25,7 @@ namespace SitemapWeb.Jobs
         {
             var sitemapSubmission = _db.SitemapSubmissions.Single(x => x.Id == sitemapSubmissionId);
 
-            _hubContext.Clients.Groups(sitemapSubmissionId.ToString()).SendAsync("SubmissionUpdate", "from hangfire");
+            // _hubContext.Clients.Groups(sitemapSubmissionId.ToString()).SendAsync("SubmissionUpdate", "from hangfire");
 
             var progressUpdater = new SignalRProgressUpdater(_hubContext, sitemapSubmissionId.ToString());
 

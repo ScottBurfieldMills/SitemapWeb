@@ -1,9 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
-if (document.getElementById('sitemap-checker') !== undefined) {
+﻿if (document.getElementById('sitemap-checker') !== undefined) {
     Vue.component('sitemap-submit', {
         template: '#sitemap-submit',
         data: function () {
@@ -31,6 +26,25 @@ if (document.getElementById('sitemap-checker') !== undefined) {
         }
     });
 
+    class SitemapHub {
+        watch(submittionId, updateCallback) {
+            this.connection = new signalR.HubConnectionBuilder()
+                .withUrl('/sitemaphub')
+                .build();
+
+            this.connection.on('SubmissionUpdate', updateCallback);
+
+            this.connection.start()
+                .then(() => this.watchSubmission(submittionId));
+        }
+
+        watchSubmission(submissionId) {
+            console.log('Invoking watch for submission ' + submissionId);
+
+            this.connection.invoke('WatchSubmission', submissionId);
+        }
+    }
+
     Vue.component('sitemap-inprogress', {
         template: '#sitemap-inprogress',
         props: {
@@ -44,9 +58,33 @@ if (document.getElementById('sitemap-checker') !== undefined) {
             }
         },
         data: function () {
+            const steps = Object.freeze({
+                'parsing': 1,
+                'validating': 2
+            });
+
             return {
-                
+                steps: steps
             };
+        },
+        computed: {
+            parsingStepClass() {
+                return this.internalStep === this.steps.parsing
+                    ? 'active-step'
+                    : 'completed-step'; 
+            },
+            validatingStepClass() {
+                return this.internalStep === this.steps.validating
+                    ? 'active-step'
+                    : '';
+            },
+            internalStep() {
+                if (this.results.length === 0) {
+                    return this.steps.parsing;
+                }
+
+                return this.results.length === 0 ? this.steps.parsing : this.steps.validating;
+            }
         }
     });
 
@@ -57,29 +95,25 @@ if (document.getElementById('sitemap-checker') !== undefined) {
             submission: {
                 url: ''
             },
-            results: []
+            signalRConnection: null,
+            results: [],
+            steps: {
+                inprogress: 'inprogress'
+            },
+            hub: new SitemapHub()
         },
         methods: {
-            submitted: function (submission) {
+            submitted(submission) {
                 this.submission = submission;
 
-                this.step = 'inprogress';
+                this.step = this.steps.inprogress;
 
-                const connection = new signalR.HubConnectionBuilder()
-                    .withUrl('/sitemaphub')
-                    .build();
-
-                connection.on('SubmissionUpdate', (url, statusCode) => {
-                    this.results.unshift({
-                        url: url,
-                        statusCode: statusCode
-                    });
-                });
-
-                connection.start().then(() => {
-                    connection.invoke('WatchSubmission', submission.id);
-
-                    console.log('Invoking watch for submission ' + submission.id);
+                this.hub.watch(this.submission.id, this.submissionUpdate);
+            },
+            submissionUpdate(url, statusCode) {
+                this.results.unshift({
+                    url: url,
+                    statusCode: statusCode
                 });
             }
         }

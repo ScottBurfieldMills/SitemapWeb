@@ -19,6 +19,7 @@
   "homepage": "https://gitlab.com/scottburfieldmills/SitemapWeb#README",
   "dependencies": {
     "@aspnet/signalr": "^1.0.0",
+    "http-server": "^0.11.1",
     "vue": "^2.5.16"
   }
 }

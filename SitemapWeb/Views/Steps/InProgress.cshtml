@@ -1,6 +1,15 @@
 ﻿<script type="text/x-template" id="sitemap-inprogress">
     <div>
         <h1>In Progress - {{url}}</h1>
+        
+        <div class="alert alert-info">
+            <p :class="parsingStepClass">
+                1. Loading and parsing sitemap
+            </p>
+            <p :class="validatingStepClass">
+                2. Validating sitemap
+            </p>
+        </div>
 
         <table class="table table-striped table-hover">
             <thead>

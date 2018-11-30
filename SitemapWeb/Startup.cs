@@ -57,7 +57,8 @@ namespace SitemapWeb
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // Do not redirect to HTTPS: HTTPS is handled by the reverse proxy in production
+            // app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
